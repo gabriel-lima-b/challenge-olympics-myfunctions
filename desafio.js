@@ -1,8 +1,8 @@
-//Código criado para o Desafio - challenge-olympics-myfunctions
-// para o processo de seleção para o START DB - programa de estágios da DBServer
-//Mais informações sobre o desafio em https://github.com/dbserver/challenge-olympics-myfunctions
+//	Código criado para o Desafio - challenge-olympics-myfunctions
+// 	   para o processo de seleção para o START DB - programa de estágios da DBServer
+//	Mais informações sobre o desafio em https://github.com/dbserver/challenge-olympics-myfunctions
 //
-//Criado por Gabriel Lima Brito da Silva em 06 de Agosto de 2021
+//	Criado por Gabriel Lima Brito da Silva em 06 de Agosto de 2021
 //
 
 let olympicsMedalTable = [
@@ -103,7 +103,9 @@ Array.prototype.customFind = function (predicate) {
 // e retorna um valor true ou false.
 Array.prototype.customSome = function (predicate) {
 	for (let index = 0; index < this.length; index++) {
-		return predicate(this[index]);
+		if (predicate(this[index])) {
+			return true;
+		}
 	}
 	return false;
 };
@@ -130,11 +132,19 @@ Array.prototype.customMap = function (callback) {
 
 //O método reduce() executa uma função reducer (fornecida por você) para cada elemento do array, resultando num único valor de retorno.
 Array.prototype.customReduce = function (callback, initialValue) {
+	let index = 0;
+
 	if (typeof initialValue === 'undefined') {
-		initialValue = 0;
+		if (this[0]) {
+			initialValue = this[0];
+			index = 1;
+		} else {
+			throw new TypeError('Reduce of empty array with no initial value');
+		}
 	}
+
 	let acumulator = initialValue;
-	for (let index = 0; index < this.length; index++) {
+	for (index; index < this.length; index++) {
 		const element = this[index];
 		acumulator = callback(acumulator, element, index, this);
 	}
@@ -169,6 +179,8 @@ console.log(
 const paisAfricano = olympicsMedalTable.customFind(
 	(object) => object.continent === 'AFRICA'
 );
+
+console.log("\n1 - Único País Africano:")
 console.log(paisAfricano);
 
 // 2 - Crie um algoritmo que retorne o total de medalhas por país
@@ -179,30 +191,37 @@ const medalhasPorPais = olympicsMedalTable.customMap((object) => {
 	};
 	return properties;
 });
+
+console.log("\n2 - Total de medalhas por País:")
 console.log(medalhasPorPais);
 
 //3 - Crie um algoritmo para encontrar os países que conquistaram mais que 10 medalhas de ouro
-const paisesCom10MedalhasOuroNoMinimo = olympicsMedalTable.customFilter(
-	(object) => object.gold > 10
-);
+//	Meu algoritmo retorna uma lista com os países que conquistaram mais de 10 medalhas de ouro
+const paisesCom10MedalhasOuroNoMinimo = olympicsMedalTable
+	.customFilter((object) => object.gold > 10)
+	.customMap((object) => object.country);
+
+console.log("\n3 - Países que conquistaram mais que 10 medalhas de ouro:")
 console.log(paisesCom10MedalhasOuroNoMinimo);
 
 //4 - Crie um algoritmo para encontrar os países que conquistaram no minímo 30 medalhas (Ouro, Prata e Bronze)
+
 const paisesCom30MedalhasNoMinimo = olympicsMedalTable.customFilter(
 	(object) => object.gold + object.silver + object.bronze >= 30
 );
-//OU esse
+//	OU esse, onde utilizei o código que eu ja tinha escrito
 // const paisesCom30MedalhasNoMinimo = medalhasPorPais.customFilter((object)=> object.totalMedals >= 30);
+
+console.log("\n4 - Países com no mínimo 30 medalhas:")
 console.log(paisesCom30MedalhasNoMinimo);
 
 //5 - Crie um algoritmo para verificar se o continente América do Sul conquistou pelo menos 20 medalhas de ouro
-//Retorna true se teve mais de 20 medalhas de ouro e false se teve menos de 20 medalhas de ouro
-const paisesComPeloMenos20MedalhasDeOUro = 	olympicsMedalTable
+//	Meu algoritmo retorna true se teve mais de 20 medalhas de ouro ou false se teve menos de 20 medalhas de ouro
+const paisesComPeloMenos20MedalhasDeOUro =
+	olympicsMedalTable
 		.customFilter((object) => object.continent === 'AMERICA DO SUL')
 		.customMap((object) => object.gold)
-		.customReduce((total, quantity) => total + quantity)
-		 > 20;
+		.customReduce((total, quantity) => total + quantity) > 20;
 
-	
-
+console.log("\n5 - A america do sul conquistou 20 medalhas de ouro?")
 console.log(paisesComPeloMenos20MedalhasDeOUro);
