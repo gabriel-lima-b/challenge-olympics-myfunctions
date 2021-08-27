@@ -91,9 +91,9 @@ let olympicsMedalTable = [
 //O método find() retorna o valor do primeiro elemento do array que satisfizer a função de teste provida.
 //	 Caso contrario, undefined é retornado.
 Array.prototype.customFind = function (predicate) {
-	for (let index = 0; index < this.length; index++) {
-		if (predicate(this[index])) {
-			return this[index];
+	for (const element of this) {
+		if (predicate(element)) {
+			return element;
 		}
 	}
 	return undefined;
@@ -102,8 +102,8 @@ Array.prototype.customFind = function (predicate) {
 // O método some() testa se ao menos um dos elementos no array passa no teste implementado pela função atribuída
 // e retorna um valor true ou false.
 Array.prototype.customSome = function (predicate) {
-	for (let index = 0; index < this.length; index++) {
-		if (predicate(this[index])) {
+	for (const element of this) {
+		if (predicate(element)) {
 			return true;
 		}
 	}
@@ -112,9 +112,9 @@ Array.prototype.customSome = function (predicate) {
 //O método filter() cria um novo array com todos os elementos que passaram no teste implementado pela função fornecida.
 Array.prototype.customFilter = function (predicate) {
 	let result = [];
-	for (let index = 0; index < this.length; index++) {
-		if (predicate(this[index])) {
-			result.push(this[index]);
+	for (const element of this) {
+		if (predicate(element)) {
+			result.push(element);
 		}
 	}
 	return result;
@@ -122,8 +122,7 @@ Array.prototype.customFilter = function (predicate) {
 //O método map() invoca a função callback passada por argumento para cada elemento do Array e devolve um novo Array como resultado.
 Array.prototype.customMap = function (callback) {
 	let result = [];
-	for (let index = 0; index < this.length; index++) {
-		let element = this[index];
+	for (const element of this) {
 		let callElement = callback(element);
 		result.push(callElement);
 	}
@@ -180,19 +179,18 @@ const paisAfricano = olympicsMedalTable.customFind(
 	(object) => object.continent === 'AFRICA'
 );
 
-console.log("\n1 - Único País Africano:")
+console.log('\n1 - Único País Africano:');
 console.log(paisAfricano);
 
 // 2 - Crie um algoritmo que retorne o total de medalhas por país
 const medalhasPorPais = olympicsMedalTable.customMap((object) => {
-	let properties = {
+	return {
 		country: object.country,
 		totalMedals: object.gold + object.silver + object.bronze,
 	};
-	return properties;
 });
 
-console.log("\n2 - Total de medalhas por País:")
+console.log('\n2 - Total de medalhas por País:');
 console.log(medalhasPorPais);
 
 //3 - Crie um algoritmo para encontrar os países que conquistaram mais que 10 medalhas de ouro
@@ -201,7 +199,7 @@ const paisesCom10MedalhasOuroNoMinimo = olympicsMedalTable
 	.customFilter((object) => object.gold > 10)
 	.customMap((object) => object.country);
 
-console.log("\n3 - Países que conquistaram mais que 10 medalhas de ouro:")
+console.log('\n3 - Países que conquistaram mais que 10 medalhas de ouro:');
 console.log(paisesCom10MedalhasOuroNoMinimo);
 
 //4 - Crie um algoritmo para encontrar os países que conquistaram no minímo 30 medalhas (Ouro, Prata e Bronze)
@@ -212,7 +210,7 @@ const paisesCom30MedalhasNoMinimo = olympicsMedalTable.customFilter(
 //	OU esse, onde utilizei o código que eu ja tinha escrito
 // const paisesCom30MedalhasNoMinimo = medalhasPorPais.customFilter((object)=> object.totalMedals >= 30);
 
-console.log("\n4 - Países com no mínimo 30 medalhas:")
+console.log('\n4 - Países com no mínimo 30 medalhas:');
 console.log(paisesCom30MedalhasNoMinimo);
 
 //5 - Crie um algoritmo para verificar se o continente América do Sul conquistou pelo menos 20 medalhas de ouro
@@ -223,5 +221,5 @@ const paisesComPeloMenos20MedalhasDeOUro =
 		.customMap((object) => object.gold)
 		.customReduce((total, quantity) => total + quantity) > 20;
 
-console.log("\n5 - A america do sul conquistou 20 medalhas de ouro?")
+console.log('\n5 - A america do sul conquistou 20 medalhas de ouro?');
 console.log(paisesComPeloMenos20MedalhasDeOUro);

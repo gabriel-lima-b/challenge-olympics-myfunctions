@@ -1,0 +1,27 @@
+{
+  "name": "challenge-olympics-myfunctions",
+  "version": "1.0.0",
+  "description": "Test case Start DB",
+  "main": "desafio.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabriel-lima-b/challenge-olympics-myfunctions.git"
+  },
+  "keywords": [
+    "StartDB",
+    "test",
+    "solution"
+  ],
+  "author": "Gabriel Lima Brito da Silva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabriel-lima-b/challenge-olympics-myfunctions/issues"
+  },
+  "homepage": "https://github.com/gabriel-lima-b/challenge-olympics-myfunctions#readme",
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}
